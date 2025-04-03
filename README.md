@@ -53,8 +53,8 @@ pip install flask pandas numpy scikit-learn imbalanced-learn
 - **Request (JSON Format)**:
   ```json
   {
-    "Temperature": 85,
-    "Run_Time": 200,
+    "Temperature": 21,
+    "Run_Time": 5,
     "Machine_Age": 5,
     "Humidity": 50
   }
@@ -62,8 +62,8 @@ pip install flask pandas numpy scikit-learn imbalanced-learn
 - **Response**:
   ```json
   {
-    "Predicted downtime": "Yes",
-    "Confidence": 0.78
+    "Predicted downtime": "No",
+    "Confidence": 0.9
   }
   ```
 
