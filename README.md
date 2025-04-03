@@ -1,28 +1,85 @@
-
-
 # Machine Downtime Prediction API
 
-This API predicts machine downtime based on various factors such as temperature, run time, machine age, and humidity using a Logistic Regression model. It uses synthetic data and is designed for use in machine maintenance and predictive analytics.
+## Overview
+This project is a Flask-based web application that predicts machine downtime based on input parameters such as temperature, runtime, machine age, and humidity. The model is trained using synthetic data and employs a **Random Forest Classifier** for classification.
 
-## Prerequisites
+## Features
+- **Web Interface**: Users can input machine-specific parameters and receive downtime predictions.
+- **Machine Learning Model**: A **Random Forest Classifier** trained with **SMOTE** to handle class imbalance.
+- **Feature Engineering**: Includes interaction between **Temperature** and **Run Time** as a new feature.
+- **Flask API**: Accepts user input via web forms and JSON requests.
+- **Data Normalization**: Uses **MinMaxScaler** for scaling features.
 
-Before running the Flask app, ensure that you have the following installed on your Windows PC:
+## Dataset
+The synthetic dataset consists of the following features:
+- **Temperature (°F)**: Range from **60 to 100**
+- **Run Time (minutes)**: Range from **50 to 300**
+- **Machine Age (years)**: Range from **1 to 10**
+- **Humidity (%RH)**: Range from **30 to 80**
+- **Downtime Flag**: Binary (0 = No Downtime, 1 = Downtime)
+- **Temp_Run_Interaction**: Computed as `Temperature * Run_Time`
 
-1. **Python 3.8+**
-2. **pip (Python package installer)**
+## Setup & Installation
+### Prerequisites
+Ensure you have **Python 3.x** installed along with the following dependencies:
+```sh
+pip install flask pandas numpy scikit-learn imbalanced-learn
+```
 
-### Required Libraries
+### Running the Application
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/machine-downtime-prediction.git
+   cd machine-downtime-prediction
+   ```
+2. Start the Flask server:
+   ```sh
+   python app.py
+   ```
+3. Open your browser and visit:
+   ```
+   http://127.0.0.1:5000/
+   ```
 
-Install the required libraries by running the following command in your command prompt or terminal:
+## API Endpoints
+### 1. Home Page
+- **URL**: `/`
+- **Method**: `GET`
+- **Response**: Renders an HTML form for user input.
 
-```bash
-pip install pandas numpy scikit-learn imbalanced-learn flask
-
-
-example curl request:
-curl -X POST http://127.0.0.1:5000/predict -H "Content-Type: application/json" -d "{\"Temperature\": 85.5, \"Run_Time\": 150, \"Machine_Age\": 5, \"Humidity\": 60}"
-example output:
-{
+### 2. Predict Downtime
+- **URL**: `/predict`
+- **Method**: `POST`
+- **Request (JSON Format)**:
+  ```json
+  {
+    "Temperature": 85,
+    "Run_Time": 200,
+    "Machine_Age": 5,
+    "Humidity": 50
+  }
+  ```
+- **Response**:
+  ```json
+  {
     "Predicted downtime": "Yes",
-    "Confidence": 0.75
-}
+    "Confidence": 0.78
+  }
+  ```
+
+## Improving Confidence Scores
+To get better predictions, ensure input values are within meaningful ranges:
+- **Temperature**: Close to 80-90°F
+- **Run Time**: Moderate range (100-250 minutes)
+- **Machine Age**: Lower age (1-5 years) tends to reduce downtime risk
+- **Humidity**: Stable (around 40-60%)
+
+## Future Enhancements
+- Implement **Deep Learning (LSTM)** for sequential data.
+- Deploy on **AWS/GCP** for production usage.
+- Improve model accuracy with **real-world data**.
+
+## Author
+- Kavya Negi  
+- Email: kavyanegi0007@gmail.com
+
