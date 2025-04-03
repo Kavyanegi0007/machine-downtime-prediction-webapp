@@ -71,7 +71,7 @@ def predict():
         confidence = model.predict_proba(input_data_scaled)[0][prediction[0]]  # Get the confidence of the prediction
         
         # Respond with prediction and confidence
-        return render_template('mach down.html', prediction=predicted_downtime, confidence=round(confidence, 2))
+        return render_template('index.html', prediction=predicted_downtime, confidence=round(confidence, 2))
 
     except Exception as e:
         return render_template('index.html', error=str(e))
